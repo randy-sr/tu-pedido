@@ -18,23 +18,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Agrupar rutas que necesitan autenticación
 Route::middleware('auth:sanctum')->group(function() {
+    // Ruta para obtener información del usuario autenticado
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+    // Ruta para cerrar sesión
     Route::post('/logout', [AuthController::class, 'logout']);
-
-    //Almacenar ordenes
-
+    // Rutas para almacenar y mostrar pedidos
     Route::apiResource('/pedidos', PedidoController::class);
 
+    // Rutas para almacenar y mostrar categorías de productos
     // Con apiResource no tengo que ir asociando cada metodo(get,post) sino que este ya asocia dependiendo del metodo
     Route::apiResource('/categorias', CategoriaController::class);
+    // Rutas para almacenar y mostrar productos
     Route::apiResource('/productos', ProductoController::class);
 });
 
 
 
-// autenticacion
+// Rutas para autenticación (registro e inicio de sesión)
 Route::post('/registro', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);

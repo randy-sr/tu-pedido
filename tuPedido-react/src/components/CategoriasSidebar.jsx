@@ -1,13 +1,13 @@
 import useTienda from "../hooks/useTienda"
 import Aside from "../styled-components/aside"
 import Categoria from "./Categoria"
-import useAuth from "../hooks/useAuth"
 
 const CategoriasSidebar = () => {
 
     const logo = "logo-nuevo.png"
+   
+    // Obtener la lista de categorías de la tienda desde el estado global
     const { categorias } = useTienda()
-    const { logout, user } = useAuth({middleware: 'auth'})
 
     return (
         <Aside>
@@ -18,25 +18,14 @@ const CategoriasSidebar = () => {
                         alt="Imagen Logo" 
                     />
                 </div>
-
-                <p className="d-flex justify-content-center">Hola  {user?.name}</p>
-
-                <div className="mt-5">
+                
+                {/* Mostrar la lista de categorías */}
+                <div className="mt-5 d-flex flex-column flex-sm-row">
                     {
                         categorias.map( categoria => (
                             <Categoria key={categoria.id} categoria={categoria}/>
                         ))
                     }
-                </div>
-
-                <div className="my-4 px-4">
-                    <button
-                        type="button"
-                        className="btn btn-danger text-center w-100 p-3 fw-bold"
-                        onClick={logout}
-                    >
-                        Cancelar Pedido
-                    </button>
                 </div>
         </Aside>
     )

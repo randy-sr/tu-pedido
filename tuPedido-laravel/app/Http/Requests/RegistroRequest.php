@@ -7,19 +7,13 @@ use Illuminate\Validation\Rules\Password as PasswordRules;
 
 class RegistroRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
+     // Método que verifica si el usuario tiene acceso para realizar la solicitud
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
-     */
+    // Reglas de validación que deben cumplir los campos de la solicitud
     public function rules(): array
     {
         return [
@@ -32,7 +26,8 @@ class RegistroRequest extends FormRequest
             ]
         ];
     }
-
+    
+    // Mensajes de error personalizados para cada regla de validación
     public function messages() {
         return [
             'name' => 'El nombre es obligatorio',

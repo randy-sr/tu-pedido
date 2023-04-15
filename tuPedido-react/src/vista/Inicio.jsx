@@ -1,6 +1,5 @@
 import useSWR from 'swr'
 import Producto from "../components/Producto"
-//import { productos as data } from "../data/productos" 
 import Grid from "../styled-components/grid"
 import useTienda from "../hooks/useTienda"
 import axiosCliente from '../config/axios'
@@ -8,28 +7,35 @@ import { Helmet } from 'react-helmet-async'
 import useAuth from "../hooks/useAuth"
 
 const Inicio = () => {
-
+    // Obtenemos la categoría actual y la función para abrir el segundo modal desde nuestro hook personalizado useTienda
     const { categoriaActual, handleClickModal2 } = useTienda()
-    const { logout } = useAuth({middleware: 'auth'})
 
+    // Obtenemos la función logout desde nuestro hook personalizado useAuth
+    const { logout } = useAuth({middleware: 'auth'})
+    
+    // Obtenemos el token de autenticación desde el almacenamiento local
     const token = localStorage.getItem('AUTH_TOKEN')
+
+    // Configuramos el fetcher para obtener los productos desde nuestra API
     const fetcher = () => axiosCliente('/api/productos', {
       headers: {
         Authorization: `Bearer ${token}`
       }
     }).then( data => data.data)
 
-
+    // Utilizamos el hook useSWR para hacer fetching de los productos cada 1 
+    //segundo y mostrar un indicador de carga mientras tanto
     const { data, error, isLoading } = useSWR('/api/productos', fetcher, {
        refreshInterval: 1000
     })
 
+    // Si se está cargando, mostramos un mensaje de carga
     if( isLoading ) return 'Cargando'
 
-
+    // Filtramos los productos según la categoría actual
     const productos = data.data.filter( producto => producto.categoria_id === categoriaActual.id)
 
-
+    // Renderizamos los productos y los botones para cancelar el pedido y agregar propina
     return (
       <>
         <Helmet>

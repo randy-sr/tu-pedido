@@ -2,8 +2,10 @@ import { formatearDinero } from "../helpers";
 import useTienda from "../hooks/useTienda";
 
 const Producto = ( { producto, botonAgregar = false, botonDisponible = false }) => {
-
+    // Extrae las propiedades necesarios de producto
     const { nombre, imagen, precio} = producto;
+
+    // Extrae de Hook Tienda las propiedades globales necesarias
     const { handleClickModal, handleSetProducto, handleClickProductoAgotado } = useTienda()
 
     return (
@@ -18,6 +20,9 @@ const Producto = ( { producto, botonAgregar = false, botonDisponible = false }) 
         <div className="card-body d-flex flex-column">
           <h3 className="card-title">{nombre}</h3>
           <p className="card-text fs-3 fw-bold text-danger">{formatearDinero(precio)}</p>
+          {/* Renderiza un botón para agregar el producto al carrito de compras 
+              si la variable boton disponible o agregar es true, rederizara una u otra
+          */}
           { botonAgregar && (
             <button 
                 type="button"

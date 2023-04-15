@@ -3,23 +3,22 @@ import useTienda from "../hooks/useTienda"
 import useAuth from "../hooks/useAuth"
 import Aside2 from "../styled-components/aside2"
 import ResumenProductos from "./ResumenProductos"
-import styled from "styled-components"
 
 
 const ProductosResumen = () => {
 
-
+    // Obtiene el estado de la tienda y las funciones necesarias para manipularla
     const { pedido, total, cantidadPropina, handleSumbitNuevaOrden , display} = useTienda()
+    // Obtiene el estado de autenticación y las funciones necesarias para manipularla
     const { logout, user } = useAuth({middleware: 'auth'})
-    // const comprobarPedido = () => pedido.length === 0
+    // Función que comprueba si el pedido está vacío o no
     const comprobarPedido = () => pedido.length === 0 && cantidadPropina === 0
 
+    // Función que se ejecuta cuando se envía el formulario de confirmación del pedido
     const handleSubmit = e => {
       e.preventDefault()
       handleSumbitNuevaOrden(logout)
     }
-
-    console.log(display)
 
     return (
       <Aside2 display={display}>
@@ -31,6 +30,7 @@ const ProductosResumen = () => {
         <p className="fs-5 my-4 fw-light">Aqui podrás ver el resumen y total de tu pedido</p>
         
         <div>
+          {/* Si no hay productos en el pedido, muestra un mensaje */}
           {pedido.length === 0 ? (
             <p className="fs-3 text-center">
               No tienes pedidos aún

@@ -8,47 +8,40 @@ use Illuminate\Http\Request;
 
 class ProductoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+   
     public function index()
     {
         return new ProductoCollection(Producto::where('disponible', 1)->get());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    
     public function store(Request $request)
     {
-        //
+        
     }
 
-    /**
-     * Display the specified resource.
-     */
+    
     public function show(Producto $producto)
     {
-        //
+        
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    
     public function update(Request $request, Producto $producto)
     {
+        // Actualizar el valor del atributo 'disponible' del producto a 0 (no disponible)
         $producto->disponible = 0;
+        // Guardar el producto actualizado en la base de datos
         $producto->save();
+        // Devolver una respuesta JSON con el producto actualizado
         return [
             'producto' => $producto
         ];
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    
     public function destroy(Producto $producto)
     {
-        //
+        
     }
 }

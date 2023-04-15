@@ -8,15 +8,19 @@ import { formatearDinero } from "../helpers";
 import {  BsDash,BsPlusLg, BsXCircle } from "react-icons/bs";
 
 const ModalProducto = () => {
-
+    // Hook personalizado para acceder al estado global de la tienda
     const { producto, handleClickModal, handleAgregarPedido, pedido } = useTienda()
+    // Estado para la cantidad de producto en el modal
     const [ cantidad , setCantidad ]  = useState(1)
+
+     // Estado para saber si se está editando un producto ya existente en el pedido
     const [ edicion, setEdicion ] = useState(false)
 
+    // Efecto que se ejecuta cuando se actualiza el estado del pedido
     useEffect(() => {
         if( pedido.some( pedidoState => pedidoState.id === producto.id)) {
+              // Si el producto ya existe en el pedido se recupera la cantidad y se establece la edición en true
             const productoEdicion = pedido.filter( pedidoState => pedidoState.id === producto.id)[0]
-
             setCantidad(productoEdicion.cantidad)
             setEdicion(true)
         }

@@ -11,17 +11,13 @@ use Illuminate\Support\Facades\Auth;
 
 class PedidoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Devuelve una colección de pedidos con su información de usuario y productos asociados.
     public function index()
     {
         return new PedidoCollection(Pedido::with('user')->with('productos')->where('estado', 0)->get());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
         // ALMACENAR ORDEN
@@ -55,26 +51,22 @@ class PedidoController extends Controller
         // ALMACENAR EN LA BD
         PedidoProducto::insert($pedido_producto);
 
-
+        // RETORNAR RESPUESTA
         return [
             'message' => 'Pedido realizado correctamente, estará listo en unos minutos'
         ];
     }
 
-    /**
-     * Display the specified resource.
-     */
+    
     public function show(Pedido $pedido)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    
     public function update(Request $request, Pedido $pedido)
     {
-        //
+        // Actualiza el estado del pedido a "completado"
 
         $pedido->estado = 1;
         $pedido->save();
@@ -84,11 +76,9 @@ class PedidoController extends Controller
         ];
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    
     public function destroy(Pedido $pedido)
     {
-        //
+        
     }
 }
